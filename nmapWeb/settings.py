@@ -72,17 +72,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nmapWeb.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'YOURDATABASENAME',
-#        'USER': 'YOURUSERNAME',
-#        'PASSWORD': 'YOURPASSWORD',
-#        'HOST': 'YOURHOSTNAME',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nmap',
+        'USER': 'admin',
+        'PASSWORD': 'abcd1234',
+        'HOST': 'nmap-online.ci3q4emuhlqv.us-west-2.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
