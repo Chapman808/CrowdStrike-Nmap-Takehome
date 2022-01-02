@@ -1,11 +1,28 @@
-<h1>Nmap Online</h1>
-<h2> Simply enter an IP address or hostname, and hit enter to scan!</h2>
-<br>
-<form action="/" method="get">
-    <label for="fname">IP or hostname</label>
-    <input type="text" id="host" name="host"><br><br>
-    <input type="submit" value="Submit">
-</form>
-
-<h2>Results:</h2>
-<p>{{results}}</p>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Nmap Port Scan Online</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+    <body>
+        <h1 class="bold topp left">$./Nmap-Online.sh</h1>
+        <p>
+            Simply enter an IP address or hostname, and hit enter to scan!
+            <div class=tile>
+                <form action="/" method="get">
+                    <label>IP or hostname</label>
+                    <input type="text" id="host" name="host"><br><br>
+                    <input type="submit" value="Submit" class=button>
+                </form>    
+            </div>
+        </p>
+       <hr><br>
+        <div>
+            <h2 class=left>Results and history:</h2>
+            <div class=tilefixedwidth>
+                <pre class=prettyprint>{{results}}</pre>
+            </div>
+        </div>
+    </body>
+</html>
