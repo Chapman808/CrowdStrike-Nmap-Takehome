@@ -15,4 +15,6 @@ These steps assume Python3 is already installed and you are running on an Ubuntu
 
 1. clone this repo
 2. install django
+
+
 check if django is already installed: ```python -m django --version```
