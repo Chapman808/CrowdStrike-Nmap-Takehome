@@ -9,5 +9,3 @@ This project uses the Django Web Framework, so there is third party library code
 The CSS is also borrowed from public sources, because I do not intend to showcase front end design skills with this project. I did make some minor modifications to the css. Credit to: https://github.com/thelearn-tech/hacker-theme
 
 
-The HTML is original.
-
