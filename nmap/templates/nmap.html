@@ -10,7 +10,7 @@
         <p>
             Simply enter an IP address or hostname, and hit enter to scan!
             <div class=tile>
-                <form action="/" method="get">
+                <form action="/submit/" method="post">{% csrf_token %}
                     <label>IP or hostname</label>
                     <input type="text" id="host" name="host"><br><br>
                     <input type="submit" value="Submit" class=button>
@@ -21,7 +21,11 @@
         <div>
             <h2 class=left>Results and history:</h2>
             <div class=tilefixedwidth>
-                <pre class=prettyprint>{{results}}</pre>
+                <ul>
+                    {% for result in all_results %}
+                    <li>Scan Result for host {{result.host}}:<pre>{{result.content}}</pre></li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </body>
