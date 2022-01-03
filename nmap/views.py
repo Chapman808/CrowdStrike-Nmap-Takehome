@@ -1,3 +1,4 @@
+from django.db.models.expressions import Value
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from .models import NmapResult
@@ -6,7 +7,7 @@ import simplejson as json
 
 def index(request):
     def _changesSinceLastScan(all_nmap_results):
-        most_recent_scan = json.loads(all_nmap_results[0].ports)
+        most_recent_scan = json.loads(all_nmap_results[0].ports) if all_nmap_results else set()
         if all_nmap_results.count() >= 2:
             previous_scan = json.loads(all_nmap_results[1].ports)
         else: previous_scan = set()
@@ -15,9 +16,12 @@ def index(request):
         return ["port opened: " + item for item in added] + ["port closed: " + item for item in removed] #return all added and removed ports with description
 
     host = request.session.get('host')  #current hostname to display results applied from submitNmap redirect
+    error = request.session.get('error') if request.session.get('error') else '' #get any error messages passed through session
+    request.session['error'] = '' #reset error value
+
     all_nmap_results = NmapResult.objects.filter(host=host) 
     all_nmap_results = all_nmap_results.order_by('timestamp').reverse() #all results in reverse order by timestamp
-    most_recent_scan = all_nmap_results[0]
+    most_recent_scan = all_nmap_results[0] if all_nmap_results else None
     print(_changesSinceLastScan(all_nmap_results))
     return render(
         request, 
@@ -25,14 +29,15 @@ def index(request):
         {
             'all_results': all_nmap_results,
             'most_recent' : most_recent_scan,
-            'open_port_changes' : _changesSinceLastScan(all_nmap_results)
+            'open_port_changes' : _changesSinceLastScan(all_nmap_results),
+            'error' : error
         }
     )
 
 def submitNmap(request):
-    def validateHostname (host):
+    def _validateHostname (host):
         if host: return host
-        else: return ""
+        else: raise ValueError("Invalid hostname.")
 
     def _getNmapResults (host):
         nmapProcess = subprocess.Popen(['nmap', host, '-p 0-1000', '--open', '-oG', '-'], stdout=subprocess.PIPE)
@@ -49,7 +54,12 @@ def submitNmap(request):
         portsList = json.dumps(portsList)
         return portsList
 
-    host = validateHostname(request.POST.get('host'))
+    try:
+        host = _validateHostname(request.POST.get('host')) #set session variable for use by the index page in filtering results
+    except ValueError as err:
+        request.session['host'] = ''
+        request.session['error'] = str(err) #set session variable for use by the index page in filtering results
+        return HttpResponseRedirect('/') 
     request.session['host'] = host  #set session variable for use by the index page in filtering results
     ports = _getNmapResults(host) #run the nmap command and return the string results
     portsList = _formatNmapPorts(ports) #filter the results and process them into a list
