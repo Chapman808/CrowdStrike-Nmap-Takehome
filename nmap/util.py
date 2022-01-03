@@ -20,9 +20,9 @@ def formatNmapPorts (scanResult):
     if len(scanResult.split("\t")) > 1: scanResult = scanResult.split("\t")[1] #split off uneeded information
     scanResult = scanResult[len("Ports: ")::]  #strip off the 'Ports: ' indicator
     portsList = scanResult.split(", ") #split open ports into a list
-    for port in portsList:
-        port = port.split("/")[0]
+    portsList = [port.split("/")[0] for port in portsList]
     portsList = json.dumps(portsList)
+    portsList = '[]' if portsList == '[""]' else portsList
     return portsList
 
 def formatNmapResultsAsJson(nmapResultQuerySet):

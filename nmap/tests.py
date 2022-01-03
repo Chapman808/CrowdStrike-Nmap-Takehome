@@ -1,9 +1,9 @@
 from django.test import TestCase
 import unittest
-from .util import validateHostname
+from .util import formatNmapPorts, validateHostname
 # Create your tests here.
 
-class TestHostnameValidation(unittest.TestCase):
+class TestUtilFunctions(unittest.TestCase):
     def test_emptyHostname(self):
         hostname = ""
         with self.assertRaises(ValueError):
@@ -19,6 +19,15 @@ class TestHostnameValidation(unittest.TestCase):
         for ip in ips:
             with self.assertRaises(ValueError):
                 validateHostname(ip)
+
+class TestFormatNmapPorts(unittest.TestCase):
+    def test_formatNmapPorts(self):
+        nmapPorts = "Host: 45.33.32.156 (scanme.nmap.org)	Ports: 22/open/tcp//ssh///, 80/open/tcp//http///"
+        intended = '["22", "80"]'
+        self.assertEquals(intended, formatNmapPorts(nmapPorts))
+        nmapPorts = ""
+        intended = '[]'
+        self.assertEquals(intended, formatNmapPorts(nmapPorts))
 
 if __name__ == '__main__':
     unittest.main()
