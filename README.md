@@ -2,9 +2,6 @@
 
 Web application that uses user input to perform Nmap scans
 
-## Todo  
-- json REST api
-
 ## Disclaimers (Please Read)
 
 This project uses the Django Web Framework, so there is third party library code within this project that I do not wish to take credit for. The business logic, of course, is my own. 
@@ -44,4 +41,21 @@ These steps assume Python3 is already installed and you are running on an Linux.
 2. By default the server runs on localhost:8000. This can be changed in settings.py
 3. Access via browser:  
    ![image](https://user-images.githubusercontent.com/16928672/147896607-1262671d-55f2-4c63-a1c5-434f98be9301.png)
+
+## Interacting with the REST API
+
+Nmap Online includes a REST API to view past scans for a given hostname. 
+
+**Supported Response Codes:** 200, 400  
+**Returns:** JSON Array  
+**Endpoints:**  
+  - Past Scans:
+     - **Path:** /api/scans/
+     - **Required Query parameter:** _host_
+     - **Example:** /api/scans/?host=localhost
+
+      **Example response (200 OK):**
+
+      ```[{"model": "nmap.nmapresult", "pk": 9, "fields": {"host": "127.0.0.1", "ports": "[\"631/open/tcp//ipp///\"]", "timestamp": "2022-01-03T15:51:32.625Z"}}, {"model": "nmap.nmapresult", "pk": 11, "fields": {"host": "127.0.0.1", "ports": "[\"631/open/tcp//ipp///\"]", "timestamp": "2022-01-03T16:01:58.961Z"}}, {"model": "nmap.nmapresult", "pk": 12, "fields": {"host": "127.0.0.1", "ports": "[\"631/open/tcp//ipp///\"]", "timestamp": "2022-01-03T16:02:06.580Z"}}]```
+
 
