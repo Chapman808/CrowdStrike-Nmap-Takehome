@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'nmap',
         'USER': 'admin',
-#        'PASSWORD': '',
+        'PASSWORD': 'abcd1234',
         'HOST': 'nmap-online.ci3q4emuhlqv.us-west-2.rds.amazonaws.com',
         'PORT': '3306',
     }

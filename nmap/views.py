@@ -1,10 +1,11 @@
+import re
 from django.db.models.expressions import Value
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import NmapResult
-from .util import validateHostname
-import subprocess
+from .util import formatNmapResultsAsJson, validateHostname, getNmapResults, formatNmapPorts, formatNmapResultsAsJson
 import simplejson as json
+from django.core import serializers
 
 def index(request):
     def _changesSinceLastScan(all_nmap_results):
@@ -36,34 +37,28 @@ def index(request):
     )
 
 def submitNmap(request):
-    def _getNmapResults (host):
-        nmapProcess = subprocess.Popen(['nmap', host, '-p 0-1000', '--open', '-oG', '-'], stdout=subprocess.PIPE)
-        grepPortsProcess = subprocess.Popen(['grep', 'Ports:'], stdin=nmapProcess.stdout, stdout=subprocess.PIPE)
-        nmapProcess.stdout.close()
-        return grepPortsProcess.stdout.read().decode('utf-8')
-
-    def _formatNmapPorts (scanResult):
-        if len(scanResult.split("\t")) > 1: scanResult = scanResult.split("\t")[1] #split off uneeded information
-        scanResult = scanResult[len("Ports: ")::]  #strip off the 'Ports: ' indicator
-        portsList = scanResult.split(", ") #split open ports into a list
-        for port in portsList:
-            port = port.split("/")[0]
-        portsList = json.dumps(portsList)
-        return portsList
-
     try:
-        host = validateHostname(request.POST.get('host')) #set session variable for use by the index page in filtering results
+        host = validateHostname(request.POST.get('host'))
     except ValueError as err:
         request.session['host'] = ''
         request.session['error'] = str(err) #set session variable for use by the index page in filtering results
         return HttpResponseRedirect('/') 
 
     request.session['host'] = host  #set session variable for use by the index page in filtering results
-    ports = _getNmapResults(host) #run the nmap command and return the string results
-    portsList = _formatNmapPorts(ports) #filter the results and process them into a list
+    ports = getNmapResults(host) #run the nmap command and return the string results
+    portsList = formatNmapPorts(ports) #filter the results and process them into a list
 
     #create and save new Nmap result to DB Model
     dbObject = NmapResult(host=host, ports=portsList)
     dbObject.save()
 
     return HttpResponseRedirect('/')
+
+def getHostScansAsJson(request):
+    try:
+        host = validateHostname(request.GET.get('host'))
+    except ValueError as err:
+        return HttpResponse(content=str(err), status=400)
+    results = NmapResult.objects.filter(host=host).all()
+    jsonResults = serializers.serialize("json", results)
+    return HttpResponse(jsonResults)

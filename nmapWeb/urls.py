@@ -6,6 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('nmap.urls')),
     path('submit/', include('nmap.urls')),
+    path('api/scans/', include('nmap.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
