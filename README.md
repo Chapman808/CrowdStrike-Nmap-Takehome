@@ -44,6 +44,7 @@ These steps assume Python3 is already installed and you are running on an Linux.
         }
     }
    ```
+   NOTE: Make sure that whatever Database you enter as "Name" already exists in your database, and that the given user has the ability to add new tables to the database.  
 6. Migrate database changes: ```python manage.py migrate```
 
 
