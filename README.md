@@ -2,6 +2,10 @@
 
 Web application that uses user input to perform Nmap scans
 
+## Todo  
+- hostname validation w/ error message
+- json REST api
+
 ## Disclaimers (Please Read)
 
 This project uses the Django Web Framework, so there is third party library code within this project that I do not wish to take credit for. The business logic, of course, is my own. 
@@ -40,6 +44,6 @@ These steps assume Python3 is already installed and you are running on an Linux.
 
 1. Run the server: ```python3 manage.py runserver```
 2. By default the server runs on localhost:8000. This can be changed in settings.py
-3. Access via browser:
-   ![image](https://user-images.githubusercontent.com/16928672/147890651-76694ec6-62ad-4b2c-98cf-aac9b2287d41.png)
+3. Access via browser:  
+   ![image](https://user-images.githubusercontent.com/16928672/147896607-1262671d-55f2-4c63-a1c5-434f98be9301.png)
 
