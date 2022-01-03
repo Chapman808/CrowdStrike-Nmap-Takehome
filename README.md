@@ -20,15 +20,16 @@ On the back end, the service is running on port 8000. An Nginx reverse proxy ser
 These steps assume Python3 is already installed and you are running on an Linux. We will also assume that you already have a MySQL server running somewhere.
 
 1. Clone this repo
-2. Install django:
+2. Install django and related dependendies:
    1. check if django is already installed: ```python -m django --version```
    2. if not, install it. ```python -m pip install Django```
+   3. install django rest framework dependencies: ```python -m pip install djangorestframework``` and ```python -m pip install djangorestframework-api-key```
 3. Install mysql client:  
    ```sudo apt-get install python3-dev default-libmysqlclient-dev build-essential``` # Debian / Ubuntu  
    or  
    ```sudo yum install python3-devel mysql-devel``` # Red Hat / CentOS  
    then  
-   ```pip install mysqlclient```
+   ```python -m pip install mysqlclient```
 4. Enter your database information and credentials into the Database section of NmapWeb/settings.py file. Then uncomment the lines:  
    ```
        DATABASES = {
