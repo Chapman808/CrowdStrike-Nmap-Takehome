@@ -21,8 +21,6 @@ def index(request):
 
     host = request.session.get('host')  #current hostname to display results applied from submitNmap redirect
     error = request.session.get('error') if request.session.get('error') else '' #get any error messages passed through session
-    apiKey = request.GET.get('apiKey') if request.GET.get('apiKey') else ""
-    print("api key is: " + apiKey)
     request.session['error'] = '' #reset error value
 
     all_nmap_results = NmapResult.objects.filter(host=host) 

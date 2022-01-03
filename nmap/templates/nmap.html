@@ -13,7 +13,7 @@
     <p>Simply enter an IP address or hostname, and hit enter to scan for open ports (1-1000)!</p>
     <i>Disclaimer: only scan hosts with explicit, written permission! https://nmap.org/book/legal-issues.html</i>
     <div class="tile">
-        <form action="/submit/" method="post">{% csrf_token %}
+        <form action="/api/submit/" method="post">{% csrf_token %}
             <table>
                 <tr>
                     <td align="right"><label for="host">IP or hostname</label></td>

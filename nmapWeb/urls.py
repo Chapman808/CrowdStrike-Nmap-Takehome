@@ -5,7 +5,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('nmap.urls')),
-    path('submit/', include('nmap.urls')),
+    path('api/submit/', include('nmap.urls')),
     path('api/scans/', include('nmap.urls')),
 ]
 
