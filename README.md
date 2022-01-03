@@ -42,7 +42,7 @@ These steps assume Python3 is already installed and you are running on an Linux.
         }
     }
    ```
-5. Update the API Key with a new value:  
+5. Update the API Key in settings.py with a new value:  
 ```API_KEY_SECRET = 'SECRET_VALUE' #CHANGE THIS```
    
 7. Migrate database changes: ```python manage.py migrate```
