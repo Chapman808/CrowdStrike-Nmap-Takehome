@@ -27,5 +27,4 @@ def formatNmapPorts (scanResult):
 
 def formatNmapResultsAsJson(nmapResultQuerySet):
     jsonResults = ""
-    print(serializers.serialize("json", nmapResultQuerySet))
     return jsonResults

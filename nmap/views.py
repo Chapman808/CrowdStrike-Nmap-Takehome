@@ -24,7 +24,6 @@ def index(request):
     all_nmap_results = NmapResult.objects.filter(host=host) 
     all_nmap_results = all_nmap_results.order_by('timestamp').reverse() #all results in reverse order by timestamp
     most_recent_scan = all_nmap_results[0] if all_nmap_results else None
-    print(_changesSinceLastScan(all_nmap_results))
     return render(
         request, 
         'nmap.html', 
