@@ -8,6 +8,13 @@ This project uses the Django Web Framework, so there is third party library code
 
 The CSS is also borrowed from public sources, because I do not intend to showcase front end design skills with this project. I did make some minor modifications to the css. **Credit to: https://github.com/thelearn-tech/hacker-theme**
 
+## Demo
+
+If you merely want to check out a demo of the application, visit the following link. I deployed the application in AWS:
+http://ec2-52-202-85-150.compute-1.amazonaws.com/
+
+On the back end, the service is running on port 8000. An Nginx reverse proxy server exposes the application publicly on port 80. The application connects to a MYSQL database hosted in AWS.
+
 ## Installation (Linux)
 
 These steps assume Python3 is already installed and you are running on an Linux. We will also assume that you already have a MySQL server running somewhere.
@@ -35,10 +42,13 @@ These steps assume Python3 is already installed and you are running on an Linux.
         }
     }
    ```
+5. Migrate database changes: ```python manage.py migrate```
+
+
 ## Running the Application 
 
 1. Run the server: ```python3 manage.py runserver```
-2. By default the server runs on localhost:8000. This can be changed in settings.py
+2. By default the server runs on localhost:8000. 
 3. Access via browser:  
    ![image](https://user-images.githubusercontent.com/16928672/147896607-1262671d-55f2-4c63-a1c5-434f98be9301.png)
 
