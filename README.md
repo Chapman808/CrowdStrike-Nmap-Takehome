@@ -1,6 +1,6 @@
 # Nmap Online (CrowdStrike Takehome Project)
 
-Web application for port scanning, using the Nmap command-line tool.
+Web application that uses user input to perform Nmap scans
 
 ## Disclaimers (Please Read)
 
@@ -10,8 +10,8 @@ The CSS is also borrowed from public sources, because I do not intend to showcas
 
 ## Demo
 
-If you merely want to check out a demo of the application, visit the following link. I deployed the application in AWS:
-http://ec2-52-207-118-75.compute-1.amazonaws.com/
+If you merely want to check out a demo of the application, visit the following link. I deployed the application in AWS under my own domain name:
+http://chapman.sh
 
 On the back end, the service is running on port 8000. An Nginx reverse proxy server exposes the application publicly on port 80. The application connects to a MYSQL database hosted in AWS.
 
@@ -28,10 +28,8 @@ These steps assume Python3 is already installed and you are running on an Linux.
    or  
    ```sudo yum install python3-devel mysql-devel``` # Red Hat / CentOS  
    then  
-   ```python -m pip install mysqlclient```
-4. Install nmap on your system:  
-```sudo apt install nmap``` or ```sudo yum install nmap```
-5. Enter your database information and credentials into the Database section of NmapWeb/settings.py file. Then uncomment the lines:  
+   ```pip install mysqlclient```
+4. Enter your database information and credentials into the Database section of NmapWeb/settings.py file. Then uncomment the lines:  
    ```
        DATABASES = {
         'default': {
@@ -44,8 +42,7 @@ These steps assume Python3 is already installed and you are running on an Linux.
         }
     }
    ```
-   NOTE: Make sure that whatever Database you enter as "Name" already exists in your database, and that the given user has the ability to add new tables to the database.  
-6. Migrate database changes: ```python manage.py migrate```
+5. Migrate database changes: ```python manage.py migrate```
 
 
 ## Running the Application 
