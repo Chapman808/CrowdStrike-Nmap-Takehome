@@ -28,8 +28,10 @@ These steps assume Python3 is already installed and you are running on an Linux.
    or  
    ```sudo yum install python3-devel mysql-devel``` # Red Hat / CentOS  
    then  
-   ```pip install mysqlclient```
-4. Enter your database information and credentials into the Database section of NmapWeb/settings.py file. Then uncomment the lines:  
+   ```python -m pip install mysqlclient```
+4. Install nmap on your system:  
+```sudo apt install nmap``` or ```sudo yum install nmap```
+5. Enter your database information and credentials into the Database section of NmapWeb/settings.py file. Then uncomment the lines:  
    ```
        DATABASES = {
         'default': {
@@ -42,7 +44,7 @@ These steps assume Python3 is already installed and you are running on an Linux.
         }
     }
    ```
-5. Migrate database changes: ```python manage.py migrate```
+6. Migrate database changes: ```python manage.py migrate```
 
 
 ## Running the Application 
