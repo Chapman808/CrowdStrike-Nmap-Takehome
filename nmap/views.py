@@ -2,6 +2,7 @@ from django.db.models.expressions import Value
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from .models import NmapResult
+from .util import validateHostname
 import subprocess
 import simplejson as json
 
@@ -35,10 +36,6 @@ def index(request):
     )
 
 def submitNmap(request):
-    def _validateHostname (host):
-        if host: return host
-        else: raise ValueError("Invalid hostname.")
-
     def _getNmapResults (host):
         nmapProcess = subprocess.Popen(['nmap', host, '-p 0-1000', '--open', '-oG', '-'], stdout=subprocess.PIPE)
         grepPortsProcess = subprocess.Popen(['grep', 'Ports:'], stdin=nmapProcess.stdout, stdout=subprocess.PIPE)
@@ -55,15 +52,17 @@ def submitNmap(request):
         return portsList
 
     try:
-        host = _validateHostname(request.POST.get('host')) #set session variable for use by the index page in filtering results
+        host = validateHostname(request.POST.get('host')) #set session variable for use by the index page in filtering results
     except ValueError as err:
         request.session['host'] = ''
         request.session['error'] = str(err) #set session variable for use by the index page in filtering results
         return HttpResponseRedirect('/') 
+
     request.session['host'] = host  #set session variable for use by the index page in filtering results
     ports = _getNmapResults(host) #run the nmap command and return the string results
     portsList = _formatNmapPorts(ports) #filter the results and process them into a list
 
+    #create and save new Nmap result to DB Model
     dbObject = NmapResult(host=host, ports=portsList)
     dbObject.save()
 
