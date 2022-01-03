@@ -11,7 +11,6 @@ This project uses the Django Web Framework, so there is third party library code
 
 The CSS is also borrowed from public sources, because I do not intend to showcase front end design skills with this project. I did make some minor modifications to the css. **Credit to: https://github.com/thelearn-tech/hacker-theme**
 
-
 ## Installation (Linux)
 
 These steps assume Python3 is already installed and you are running on an Linux. We will also assume that you already have a MySQL server running somewhere.
