@@ -19,11 +19,31 @@
         </p>
        <hr><br>
         <div>
-            <h2 class=left>Results and history:</h2>
+            <h2 class=left>Result:</h2>
+            <div class=tilefixedwidth>
+                <ul>
+                    <li>hostname: {{most_recent.host}}</li>
+                    <li>timestamp: {{most_recent.timestamp}}</li>
+                    <li>open ports: {{most_recent.ports}}</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2 class=left>Changes since last scan:</h2>
+            <div class=tilefixedwidth>
+                <ul>
+                    {% for change in open_port_changes %}
+                    <li>{{change}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>    
+        <div>
+            <h2 class=left>All Results and history (hostname : timestamp : port)</h2>
             <div class=tilefixedwidth>
                 <ul>
                     {% for result in all_results %}
-                    <li>Scan Result for host {{result.host}}:<pre>{{result.content}}</pre></li>
+                    <li>{{result.host}} : {{result.timestamp}} UCT : {{result.ports}}</li>
                     {% endfor %}
                 </ul>
             </div>
