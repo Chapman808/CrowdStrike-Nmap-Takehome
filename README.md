@@ -54,7 +54,7 @@ These steps assume Python3 is already installed and you are running on an Linux.
 1. Run the server: ```python3 manage.py runserver```
 2. By default the server runs on localhost:8000. 
 3. Access via browser:  
-   ![image](https://user-images.githubusercontent.com/16928672/147896607-1262671d-55f2-4c63-a1c5-434f98be9301.png)
+   ![image](https://user-images.githubusercontent.com/16928672/147989547-d3e67c4b-b8d4-4a72-a92b-90b099b6ffbd.png)
 
 ## Interacting with the REST API
 
