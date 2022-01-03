@@ -8,7 +8,7 @@
     <body>
         <h1 class="bold topp left">$./Nmap-Online.sh</h1>
         <p>
-            Simply enter an IP address or hostname, and hit enter to scan!
+            Simply enter an IP address or hostname, and hit enter to scan for open ports (1-1000)!
             <div class=tile>
                 <form action="/submit/" method="post">{% csrf_token %}
                     <label>IP or hostname</label>
@@ -40,7 +40,7 @@
             </div>
         </div>    
         <div>
-            <h2 class=left>All Results and history (hostname : timestamp : port)</h2>
+            <h2 class=left>All Results and history (hostname : timestamp : ports)</h2>
             <div class=tilefixedwidth>
                 <ul>
                     {% for result in all_results %}
