@@ -11,7 +11,7 @@ The CSS is also borrowed from public sources, because I do not intend to showcas
 ## Demo
 
 If you merely want to check out a demo of the application, visit the following link. I deployed the application in AWS:
-http://ec2-52-202-85-150.compute-1.amazonaws.com/
+http://ec2-52-207-118-75.compute-1.amazonaws.com/
 
 On the back end, the service is running on port 8000. An Nginx reverse proxy server exposes the application publicly on port 80. The application connects to a MYSQL database hosted in AWS.
 
