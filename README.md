@@ -3,7 +3,6 @@
 Web application that uses user input to perform Nmap scans
 
 ## Todo  
-- hostname validation w/ error message
 - json REST api
 
 ## Disclaimers (Please Read)
