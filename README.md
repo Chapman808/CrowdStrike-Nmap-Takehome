@@ -60,7 +60,7 @@ These steps assume Python3 is already installed and you are running on an Linux.
 
 ## Interacting with the REST API
 
-Nmap Online includes a REST API to view past scans for a given hostname or submit scans. 
+Nmap Online includes a REST API to view past scans for a given hostname. 
 
 **Supported Response Codes:** 200, 400  
 **Returns:** JSON Array  
