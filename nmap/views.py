@@ -6,7 +6,9 @@ from .models import NmapResult
 from .util import formatNmapResultsAsJson, validateHostname, getNmapResults, formatNmapPorts, formatNmapResultsAsJson
 import simplejson as json
 from django.core import serializers
-
+from rest_framework.views import APIView
+from rest_framework_api_key.permissions import HasAPIKey
+from .permissions import Check_API_KEY_Auth
 def index(request):
     def _changesSinceLastScan(all_nmap_results):
         most_recent_scan = json.loads(all_nmap_results[0].ports) if all_nmap_results else set()
@@ -19,6 +21,8 @@ def index(request):
 
     host = request.session.get('host')  #current hostname to display results applied from submitNmap redirect
     error = request.session.get('error') if request.session.get('error') else '' #get any error messages passed through session
+    apiKey = request.GET.get('apiKey') if request.GET.get('apiKey') else ""
+    print("api key is: " + apiKey)
     request.session['error'] = '' #reset error value
 
     all_nmap_results = NmapResult.objects.filter(host=host) 
@@ -35,23 +39,25 @@ def index(request):
         }
     )
 
-def submitNmap(request):
-    try:
-        host = validateHostname(request.POST.get('host'))
-    except ValueError as err:
-        request.session['host'] = ''
-        request.session['error'] = str(err) #set session variable for use by the index page in filtering results
-        return HttpResponseRedirect('/') 
+class SubmitNmap(APIView):
+    permission_classes = [Check_API_KEY_Auth]
+    def post(self, request):
+        try:
+            host = validateHostname(request.POST.get('host'))
+        except ValueError as err:
+            request.session['host'] = ''
+            request.session['error'] = str(err) #set session variable for use by the index page in filtering results
+            return HttpResponseRedirect('/') 
 
-    request.session['host'] = host  #set session variable for use by the index page in filtering results
-    ports = getNmapResults(host) #run the nmap command and return the string results
-    portsList = formatNmapPorts(ports) #filter the results and process them into a list
+        request.session['host'] = host  #set session variable for use by the index page in filtering results
+        ports = getNmapResults(host) #run the nmap command and return the string results
+        portsList = formatNmapPorts(ports) #filter the results and process them into a list
 
-    #create and save new Nmap result to DB Model
-    dbObject = NmapResult(host=host, ports=portsList)
-    dbObject.save()
+        #create and save new Nmap result to DB Model
+        dbObject = NmapResult(host=host, ports=portsList)
+        dbObject.save()
 
-    return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/')
 
 def getHostScansAsJson(request):
     try:

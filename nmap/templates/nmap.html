@@ -1,53 +1,67 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Nmap Port Scan Online</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    </head>
-    <body>
-        <h1 class="bold topp left">$./Nmap-Online.sh</h1>
-        <p>
-            Simply enter an IP address or hostname, and hit enter to scan for open ports (1-1000)!
-            <div class=tile>
-                <form action="/submit/" method="post">{% csrf_token %}
-                    <label>IP or hostname</label>
-                    <input type="text" id="host" name="host"><br><br>
-                    <input type="submit" value="Submit" class=button>
-                </form>    
-            </div>
-            <p style="color: crimson;">{{error}}</p>
-        </p>
-       <hr><br>
-        <div>
-            <h2 class=left>Result:</h2>
-            <div class=tilefixedwidth>
-                <ul>
-                    <li>hostname: {{most_recent.host}}</li>
-                    <li>timestamp: {{most_recent.timestamp}}</li>
-                    <li>open ports: {{most_recent.ports}}</li>
-                </ul>
-            </div>
+
+<head>
+    <title>Nmap Port Scan Online</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <h1 class="bold topp left">$./Nmap-Online.sh</h1>
+    <p>
+    <p>Simply enter an IP address or hostname, and hit enter to scan for open ports (1-1000)!</p>
+    <i>Disclaimer: only scan hosts with explicit, written permission! https://nmap.org/book/legal-issues.html</i>
+    <div class="tile">
+        <form action="/submit/" method="post">{% csrf_token %}
+            <table>
+                <tr>
+                    <td align="right"><label for="host">IP or hostname</label></td>
+                    <td align="left"><input type="text" id="host" name="host" /></td>
+                </tr>
+                <tr>
+                    <td align="right"><label for="api-key">API key</label></td>
+                    <td align="left"><input type="password" id="api-key" name="api-key"/></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Submit" class=button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <p style="color: crimson;">{{error}}</p>
+    </p>
+    <hr><br>
+    <div>
+        <h2 class=left>Result:</h2>
+        <div class=tilefixedwidth>
+            <ul>
+                <li>hostname: {{most_recent.host}}</li>
+                <li>timestamp: {{most_recent.timestamp}}</li>
+                <li>open ports: {{most_recent.ports}}</li>
+            </ul>
         </div>
-        <div>
-            <h2 class=left>Changes since last scan:</h2>
-            <div class=tilefixedwidth>
-                <ul>
-                    {% for change in open_port_changes %}
-                    <li>{{change}}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>    
-        <div>
-            <h2 class=left>All Results and history (hostname : timestamp : ports)</h2>
-            <div class=tilefixedwidth>
-                <ul>
-                    {% for result in all_results %}
-                    <li>{{result.host}} : {{result.timestamp}} UCT : {{result.ports}}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+    </div>
+    <div>
+        <h2 class=left>Changes since last scan:</h2>
+        <div class=tilefixedwidth>
+            <ul>
+                {% for change in open_port_changes %}
+                <li>{{change}}</li>
+                {% endfor %}
+            </ul>
         </div>
-    </body>
+    </div>
+    <div>
+        <h2 class=left>All Results and history (hostname : timestamp : ports)</h2>
+        <div class=tilefixedwidth>
+            <ul>
+                {% for result in all_results %}
+                <li>{{result.host}} : {{result.timestamp}} UCT : {{result.ports}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+
 </html>
