@@ -1,8 +1,7 @@
 import socket
 import subprocess
-from django.http.response import JsonResponse
 import simplejson as json
-from django.core import serializers
+
 def validateHostname (host):
     if not host: raise ValueError("Please enter a hostname.")
     try:
@@ -24,10 +23,6 @@ def formatNmapPorts (scanResult):
     portsList = json.dumps(portsList)
     portsList = '[]' if portsList == '[""]' else portsList
     return portsList
-
-def formatNmapResultsAsJson(nmapResultQuerySet):
-    jsonResults = ""
-    return jsonResults
 
 def changesSinceLastScan(all_nmap_results):
     most_recent_scan = json.loads(all_nmap_results[0].ports) if all_nmap_results else set()

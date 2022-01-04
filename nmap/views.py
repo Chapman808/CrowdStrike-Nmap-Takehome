@@ -2,7 +2,6 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import NmapResult
 from .util import validateHostname, getNmapResults, formatNmapPorts, changesSinceLastScan
-import simplejson as json
 from django.core import serializers
 from rest_framework.views import APIView
 from .permissions import Check_API_KEY_Auth
