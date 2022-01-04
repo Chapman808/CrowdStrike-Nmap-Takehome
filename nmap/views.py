@@ -1,24 +1,13 @@
-import re
-from django.db.models.expressions import Value
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import NmapResult
-from .util import formatNmapResultsAsJson, validateHostname, getNmapResults, formatNmapPorts, formatNmapResultsAsJson
+from .util import validateHostname, getNmapResults, formatNmapPorts, changesSinceLastScan
 import simplejson as json
 from django.core import serializers
 from rest_framework.views import APIView
-from rest_framework_api_key.permissions import HasAPIKey
 from .permissions import Check_API_KEY_Auth
-def index(request):
-    def _changesSinceLastScan(all_nmap_results):
-        most_recent_scan = json.loads(all_nmap_results[0].ports) if all_nmap_results else set()
-        if all_nmap_results.count() >= 2:
-            previous_scan = json.loads(all_nmap_results[1].ports)
-        else: previous_scan = set()
-        added = list(set(most_recent_scan) - set(previous_scan)) #added open ports since last scan
-        removed = list(set(previous_scan) - set(most_recent_scan)) #closed ports since last scan
-        return ["port opened: " + item for item in added] + ["port closed: " + item for item in removed] #return all added and removed ports with description
 
+def index(request):
     host = request.session.get('host')  #current hostname to display results applied from submitNmap redirect
     error = request.session.get('error') if request.session.get('error') else '' #get any error messages passed through session
     request.session['error'] = '' #reset error value
@@ -32,7 +21,7 @@ def index(request):
         {
             'all_results': all_nmap_results,
             'most_recent' : most_recent_scan,
-            'open_port_changes' : _changesSinceLastScan(all_nmap_results),
+            'open_port_changes' : changesSinceLastScan(all_nmap_results),
             'error' : error
         }
     )

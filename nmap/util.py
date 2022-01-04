@@ -28,3 +28,12 @@ def formatNmapPorts (scanResult):
 def formatNmapResultsAsJson(nmapResultQuerySet):
     jsonResults = ""
     return jsonResults
+
+def changesSinceLastScan(all_nmap_results):
+    most_recent_scan = json.loads(all_nmap_results[0].ports) if all_nmap_results else set()
+    if all_nmap_results.count() >= 2:
+        previous_scan = json.loads(all_nmap_results[1].ports)
+    else: previous_scan = set()
+    added = list(set(most_recent_scan) - set(previous_scan)) #added open ports since last scan
+    removed = list(set(previous_scan) - set(most_recent_scan)) #closed ports since last scan
+    return ["port opened: " + item for item in added] + ["port closed: " + item for item in removed] #return all added and removed ports with description
