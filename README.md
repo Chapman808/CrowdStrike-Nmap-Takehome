@@ -1,6 +1,6 @@
 # Nmap Online (CrowdStrike Takehome Project)
 
-Web application that uses user input to perform Nmap scans
+Web application that uses user input to perform an Nmap SYN scan against ports 1-1000. 
 
 ## Disclaimers (Please Read)
 
