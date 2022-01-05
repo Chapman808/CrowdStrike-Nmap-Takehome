@@ -11,7 +11,7 @@ The CSS is also borrowed from public sources, because I do not intend to showcas
 ## Demo
 
 If you merely want to check out a demo of the application, visit the following link. I deployed the application in AWS under my own domain name:
-http://chapman.sh  
+http://nmap.chapman.sh/
 NOTE: Please contact me for an API key to demo the application
 
 
