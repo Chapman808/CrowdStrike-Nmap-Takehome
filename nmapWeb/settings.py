@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
-    "rest_framework_api_key",
 ]
 
 API_KEY_SECRET = 'SECRET_VALUE' #CHANGE THIS
