@@ -1,17 +1,16 @@
-# Nmap Online (CrowdStrike Takehome Project)
+# Nmap Online
 
-Web application that uses user input to perform Nmap scans
+Web application that uses user input to perform an Nmap SYN scan against ports 1-1000. 
 
-## Disclaimers (Please Read)
+## Details
 
-This project uses the Django Web Framework, so there is third party library code within this project that I do not wish to take credit for. The business logic, of course, is my own. 
-
-The CSS is also borrowed from public sources, because I do not intend to showcase front end design skills with this project. I did make some minor modifications to the css. **Credit to: https://github.com/thelearn-tech/hacker-theme**
+This project uses the Django Web Framework, so there is third party library code within this project that I do not wish to take credit for. 
+The CSS is also borrowed from public sources. **Credit to: https://github.com/thelearn-tech/hacker-theme**
 
 ## Demo
 
 If you merely want to check out a demo of the application, visit the following link. I deployed the application in AWS under my own domain name:
-http://chapman.sh  
+http://nmap.chapman.sh/
 NOTE: Please contact me for an API key to demo the application
 
 
